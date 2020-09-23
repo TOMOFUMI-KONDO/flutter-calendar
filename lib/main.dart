@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_calendar/screens/MyHomePage_screen.dart';
+
 import 'constants.dart';
+import 'screens/CreateSchedule.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,7 +13,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: themePrimarySwatch,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: '/create',
+      routes: {'/create': (context) => CreateSchedule()},
     );
   }
 }
