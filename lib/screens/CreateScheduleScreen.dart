@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 
 import '../utils.dart';
 
-class CreateSchedule extends StatefulWidget {
-  CreateSchedule({Key key}) : super(key: key);
+class CreateScheduleScreen extends StatefulWidget {
+  CreateScheduleScreen({Key key}) : super(key: key);
 
   @override
-  _CreateScheduleState createState() => _CreateScheduleState();
+  _CreateScheduleScreenState createState() => _CreateScheduleScreenState();
 }
 
-class _CreateScheduleState extends State<CreateSchedule> {
+class _CreateScheduleScreenState extends State<CreateScheduleScreen> {
   FirebaseFirestore _firestore;
   final _titleController = TextEditingController();
   DateTime _start = DateTime.now();
