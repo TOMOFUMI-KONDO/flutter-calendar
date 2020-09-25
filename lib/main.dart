@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'constants.dart';
-import 'screens/CreateSchedule.dart';
+import 'screens/CreateScheduleScreen.dart';
+import 'screens/ScheduleDetailScreen.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,8 +14,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: themePrimarySwatch,
       ),
-      initialRoute: '/create',
-      routes: {'/create': (context) => CreateSchedule()},
+      initialRoute: '/detail',
+      routes: {
+        '/create': (context) => CreateScheduleScreen(),
+        '/detail': (context) => ScheduleDetailScreen('XIOO5GHgkJgSPrucCFUh')
+      },
     );
   }
 }
