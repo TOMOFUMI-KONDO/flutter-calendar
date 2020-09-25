@@ -58,8 +58,10 @@ class _ScheduleDetailScreenState extends State<ScheduleDetailScreen> {
   }
 
   void _toEdit() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => (EditScheduleScreen())));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => (EditScheduleScreen(widget.scheduleId))));
   }
 
   Future<void> _delete() async {
@@ -92,7 +94,6 @@ class _ScheduleDetailScreenState extends State<ScheduleDetailScreen> {
               FlatButton(
                   onPressed: () async {
                     await _delete();
-                    print('hoge');
                     Navigator.of(context).pop();
                   },
                   child: Text('削除する'))
