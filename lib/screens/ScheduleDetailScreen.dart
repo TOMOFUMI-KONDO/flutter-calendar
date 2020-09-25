@@ -15,6 +15,7 @@ class ScheduleDetailScreen extends StatefulWidget {
 }
 
 class _ScheduleDetailScreenState extends State<ScheduleDetailScreen> {
+  FirebaseFirestore _firestore;
   String _title;
   DateTime _start;
   DateTime _end;
@@ -28,7 +29,9 @@ class _ScheduleDetailScreenState extends State<ScheduleDetailScreen> {
   Future<void> initialize() async {
     await Firebase.initializeApp();
 
-    final DocumentSnapshot schedule = await FirebaseFirestore.instance
+    _firestore = FirebaseFirestore.instance;
+
+    final DocumentSnapshot schedule = await _firestore
         .collection('users')
         .doc('mXO6v2waMTxXG18TRpmQ')
         .collection('schedules')
@@ -59,7 +62,26 @@ class _ScheduleDetailScreenState extends State<ScheduleDetailScreen> {
         MaterialPageRoute(builder: (context) => (EditScheduleScreen())));
   }
 
-  void _toDelete() {
+  Future<void> _delete() async {
+    await _firestore
+        .collection('users')
+        .doc('mXO6v2waMTxXG18TRpmQ')
+        .collection('schedules')
+        .doc(widget.scheduleId)
+        .delete();
+
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+                content: Text('予定を削除しました。'),
+                actions: <Widget>[
+                  FlatButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text('OK'))
+                ]));
+  }
+
+  void _showDeleteDialog() {
     showDialog(
         context: context,
         builder: (BuildContext context) =>
@@ -68,7 +90,11 @@ class _ScheduleDetailScreenState extends State<ScheduleDetailScreen> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text('キャンセル')),
               FlatButton(
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () async {
+                    await _delete();
+                    print('hoge');
+                    Navigator.of(context).pop();
+                  },
                   child: Text('削除する'))
             ]));
   }
@@ -84,7 +110,7 @@ class _ScheduleDetailScreenState extends State<ScheduleDetailScreen> {
             ),
             IconButton(
               icon: Icon(Icons.delete),
-              onPressed: () => _toDelete(),
+              onPressed: () => _showDeleteDialog(),
             )
           ],
         ),
