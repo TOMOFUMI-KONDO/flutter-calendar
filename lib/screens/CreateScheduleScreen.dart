@@ -11,12 +11,7 @@ class CreateScheduleScreen extends StatefulWidget {
   _CreateScheduleScreenState createState() => _CreateScheduleScreenState();
 }
 
-<<<<<<< develop:lib/screens/CreateScheduleScreen.dart
 class _CreateScheduleScreenState extends State<CreateScheduleScreen> {
-  FirebaseFirestore _firestore;
-=======
-class _CreateScheduleState extends State<CreateSchedule> {
->>>>>>> fix firebase initialize:lib/screens/CreateSchedule.dart
   final _titleController = TextEditingController();
   DateTime _start = DateTime.now();
   DateTime _end = DateTime.now().add(Duration(hours: 1));
