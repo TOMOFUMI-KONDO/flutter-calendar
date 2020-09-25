@@ -12,7 +12,6 @@ class CreateScheduleScreen extends StatefulWidget {
 }
 
 class _CreateScheduleScreenState extends State<CreateScheduleScreen> {
-  FirebaseFirestore _firestore;
   final _titleController = TextEditingController();
   DateTime _start = DateTime.now();
   DateTime _end = DateTime.now().add(Duration(hours: 1));
@@ -20,7 +19,6 @@ class _CreateScheduleScreenState extends State<CreateScheduleScreen> {
   @override
   void initState() {
     Firebase.initializeApp();
-    _firestore = FirebaseFirestore.instance;
     super.initState();
   }
 
@@ -65,7 +63,7 @@ class _CreateScheduleScreenState extends State<CreateScheduleScreen> {
   }
 
   Future<void> _save() async {
-    await _firestore
+    await FirebaseFirestore.instance
         .collection('users')
         .doc('mXO6v2waMTxXG18TRpmQ')
         .collection('schedules')
