@@ -3,12 +3,15 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
+  static String id = 'login_screen';
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-//  FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
   bool showSpinner = false;
   String email;
   String password;
@@ -29,12 +32,14 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               TextField(
                 keyboardType: TextInputType.emailAddress,
+                textAlign: TextAlign.center,
                 onChanged: (value) {
                   email = value;
                 },
               ),
               TextField(
                 obscureText: true,
+                textAlign: TextAlign.center,
                 onChanged: (value) {
                   password = value;
                 },
@@ -52,9 +57,30 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: Colors.lightBlueAccent,
                 height: 30,
                 minWidth: 200,
-                onPressed: () {
-                  print(email);
-                  print(password);
+                onPressed: () async {
+                  setState(() {
+                    showSpinner = true;
+                  });
+                  try {
+                    UserCredential user =
+                        await _auth.signInWithEmailAndPassword(
+                            email: email, password: password);
+
+                    if (user != null) {
+                      setState(() {
+                        showSpinner = false;
+                      });
+                      print('成功');
+                    }
+                  } on FirebaseAuthException catch (e) {
+                    if (e.code == 'user-not-found') {
+                      print('No user found for that email.');
+                    } else if (e.code == 'wrong-password') {
+                      print('Wrong password provided for that user.');
+                    } else {
+                      print(e);
+                    }
+                  }
                 },
               ),
             ],
